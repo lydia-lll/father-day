@@ -59,13 +59,17 @@
             .flip{
                 transform: rotateY(180deg);
             }
+            /*#pics{
+                
+            }*/
         </style>
     </head>
     <body>
-        <h1>Memory Matching Madness</h1>
+        <h1>Happy Father's Day~!</h1>
 
         <div id="panel_gamestart">
-            <p>Let's play! click to begin! Select a difficulty: </p>
+            <h3>Let's play a memory matching game --- click to begin!</h3>
+            <h3>Select a difficulty: </h3>
             <form>
                 <select id="difficulty">
                         <option value="easy">Easy</option>
@@ -88,7 +92,11 @@
             <div id='leaderBoard'>
                 <!-- <p>LeaderBoard</p> -->
             </div>
-            <button id="startAgainBtn">Start Again!</button>
+            <button id="startAgainBtn" style="margin: 10px;">Start Again!</button>
+            <br>
+            <div style="margin: 10px;">
+                <img id="pics" src="pics/summer.jpeg" width="400px">
+            </div>
         </div>
 
         <script>
@@ -104,6 +112,8 @@
             const startAgainBtn = document.querySelector('#startAgainBtn');
 
             const difficulty = document.querySelector('#difficulty');
+
+            const pics = document.querySelector('#pics');
 
             // global variables to keep track of our picked tiles
             let tile1 = false;
@@ -138,16 +148,16 @@
             // console.log(difficulty.value);
             function initGame(difficultyV){
                 if(difficultyV == "easy"){
-                    cardsNum = 12;
-                    pairsNum = cardsNum / 2;
+                    cardsNum = 10;
+                    pairsNum = cardsNum / 2+1;
                     tile_container.style.width = "420px";
                 }else if(difficultyV == "medium"){
-                    cardsNum = 20;
-                    pairsNum = cardsNum / 2;
+                    cardsNum = 16;
+                    pairsNum = cardsNum / 2+2;
                     tile_container.style.width = "520px";
                 }else{
-                    cardsNum = 30;
-                    pairsNum = cardsNum / 2;
+                    cardsNum = 24;
+                    pairsNum = cardsNum / 2+3;
                     tile_container.style.width = "620px";
                 }
                 
@@ -207,6 +217,7 @@
                             'horsea.png', 'polywog.png', 'sandshrew.png', 'rattata.png',
                             'gengar.png', 'eevee.png', 'bellsprout.png', 'squirtle.png',
                             'seel.png', 'caterpie.png'];
+                let spec_assets = ['dad.png','me.png','mom.png'];
 
                 // pick 6 graphics at random
                 let selectedTiles = [];
@@ -217,6 +228,23 @@
                     selectedTiles.push( assets[i] );
                     selectedTiles.push( assets[i] );
                     assets.splice(i, 1);
+                }
+
+                if(difficultyV == "easy"){
+                    selectedTiles.push( spec_assets[0] );
+                    selectedTiles.push( spec_assets[0] );
+                }else if(difficultyV == "medium"){
+                    selectedTiles.push( spec_assets[0] );
+                    selectedTiles.push( spec_assets[0] );
+                    selectedTiles.push( spec_assets[1] );
+                    selectedTiles.push( spec_assets[1] );
+                }else{
+                    selectedTiles.push( spec_assets[0] );
+                    selectedTiles.push( spec_assets[0] );
+                    selectedTiles.push( spec_assets[1] );
+                    selectedTiles.push( spec_assets[1] );
+                    selectedTiles.push( spec_assets[2] );
+                    selectedTiles.push( spec_assets[2] );
                 }
 
                 shuffle(selectedTiles);
@@ -332,21 +360,21 @@
                                 clearInterval(interval);
                                 yourTime = diff2;
                                 if(difficultyV == "easy"){
+                                    pics.src = "pics/summer.jpeg";
                                     if(yourTime<bestE){
                                         bestE = yourTime;
-                                        var player = prompt("Congrats! You've achived the best score. Please type in your name: ");
                                         localStorage.setItem("bestE",`${bestE}`);
                                     }
                                 }else if(difficultyV == "medium"){
+                                    pics.src = "pics/autumn.jpeg";
                                     if(yourTime<bestM){
                                         bestM = yourTime;
-                                        var player = prompt("Congrats! You've achived the best score. Please type in your name: ");
                                         localStorage.setItem("bestM",`${bestM}`);
                                     }
                                 }else{
+                                    pics.src = "pics/happy.jpg";
                                     if(yourTime<bestH){
                                         bestH = yourTime;
-                                        var player = prompt("Congrats! You've achived the best score. Please type in your name: ");
                                         localStorage.setItem("bestH",`${bestH}`);
                                     }
                                 }
@@ -362,7 +390,7 @@
                                 // for (var i = 1; i < localStorage.length; i++){
                                 //     leaderBoard.innerHTML+=`<p>${localStorage.key(i)}: ${localStorage.getItem(localStorage.key(i))}</p>`;
                                 // }
-                                leaderBoard.innerHTML+=`<p>${player}'s Best Time - Easy: ${localStorage.getItem("bestE")}</p><p>${player}'s Best Time - Medium: ${localStorage.getItem("bestM")}</p><p>${player}'s Best Time - Hard: ${localStorage.getItem("bestH")}</p>`;
+                                leaderBoard.innerHTML+=`<p>Your Best Time - Easy: ${localStorage.getItem("bestE")}</p><p>Your Best Time - Medium: ${localStorage.getItem("bestM")}</p><p>Your Best Time - Hard: ${localStorage.getItem("bestH")}</p>`;
                                 panel_gameplaying.classList.add('hidden');
                                 panel_gameover.classList.remove("hidden");
                             }, 600);
